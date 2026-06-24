@@ -1,0 +1,14 @@
+// Club Notes module — owns members-only notes about attended sessions.
+// memberId / sessionId reference the members and catalog modules by id only.
+
+model ClubNote {
+  id        String   @id @default(cuid())
+  memberId  String   @map("member_id")
+  sessionId String   @map("session_id")
+  body      String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([sessionId])
+  @@index([memberId])
+  @@map("club_notes")
+}

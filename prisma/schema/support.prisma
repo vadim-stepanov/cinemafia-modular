@@ -1,0 +1,21 @@
+// Support module — owns emulated support tickets.
+// memberId references the members module by id only (nullable: anonymous tickets).
+
+enum SupportTicketStatus {
+  OPEN
+  CLOSED
+
+  @@map("support_ticket_status")
+}
+
+model SupportTicket {
+  id        String              @id @default(cuid())
+  memberId  String?             @map("member_id")
+  subject   String
+  body      String
+  status    SupportTicketStatus @default(OPEN)
+  createdAt DateTime            @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([memberId])
+  @@map("support_tickets")
+}
